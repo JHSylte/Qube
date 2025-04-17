@@ -5,14 +5,20 @@ I emnet Mekatronikk og robotikk har vi (Jon Håvard Sylte og Trym Vannebo) nylig
 Prosjektet gikk ut på å styre vinkelen til Quben ved å bruke en terminal og/eller en GUI. I tillegg til dette skulle vi lage en PID-kontroller som skulle regulere og gi ut et hastighets-pådrag. I tillegg til den fysiske Qube-roboten skulle vi også lage en simulator av roboten, som skulle ha en visualisering i RViz. For å gjennomføre dette måtte vi totalt ha fire pakker med forskjellige funksjoner og systemer som sammarbeidet med hverandre. Pakkene vi ende opp med er Qube_description, Qube_driver, Qube_bringup og Qube_controller.
 
 # Qube_description:
-Beskrivelse av quben...
-Denne pakken inneholder 2 filer:
+Denne pakken inneholder 2 URDF-filer, som har hver sin funksjon. De to URDF-filene er: 
 
     qube.macro.xacro
     qube.urdf.xacro
-Macro
+-Macro
 
-Urdf
+Macro-filen (qube.macro.xacro) inneholder beskrivelsen av quben. I denne filen blir en digital versjon av quben laget, ved å først bygge de ulike delene til roboten, før de derreter blir satt sammen med ulike joints. Et eksempel på dette kan bli sett i kode utklippet under, der vi først beskriver den røde roterende disken til kuben og den hvite viseren som skal indikere vinklen til quben, etterfulgt av hvordan disse to skal sitte sammen med en joint.
+
+        Legg inn kode her
+
+-Urdf
+
+URDF-filen (qube.urdf.xacro) fungerer som en scene for roboten, ved å lage en link mellom quben vi beskrev i macro-filen og en scene. Scenen i URDF-filen er en veldig simpel scene der quben står i origo. Ved å sette opp pakken på denne måten, så har vi separert funksjonene til de to filene, der den ene filen beskriver quben, mens den andre legger den inn i en scene, slik at beskrivelsen kan bli visualisert. Ved å sette det opp på denne måten så blir også filen der vi beskriver quben gjenbrukbar, slik at den kan bli brukt videre i andre URD-filer.
+
 # Qube_driver:
 kommunikasjonsgrensesnittet med den fysiske Quben...
 # Qube_bringup:
