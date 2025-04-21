@@ -54,7 +54,7 @@ I tillegg til de to URDF-filene, så inneholder denne pakken også en launch-fil
         view_qube.launch.py
 
 # Pid_controller_msgs
-Er denne pakken ferdig? Og er det den som setter setreference?
+Er denne pakken ferdig? Og hva gjør den/skal vi skrive noe om den?
 
 # Qube_bringup:
 Denne pakken inneholder en launch- og en konfigurasjon-fil som fletter sammen Qube-systemet. Konfigurasjonsfilen er en URDF-fil som heter controlled_qube.urdf.xacro og den er relativt lik scene-filen fra qube_description pakken, bortsett fra at konfigurasjonsfilen inneholder mer en det scene-filen gjør. I tillegg til innholdet til scene-filen, så inkluderer konfigurasjonsfilen også qube_driver.ros2_control.xacro filen, som (skriv mer her når kode er lastet opp). 
