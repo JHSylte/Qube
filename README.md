@@ -2,7 +2,7 @@
 -----
 # Innledning (om prosjektet):
 I emnet Mekatronikk og robotikk har vi (Jon Håvard Sylte og Trym Vannebo) nylig gjennomført et mini prosjekt der vi skulle ved hjelp av ROS2 styre en Quanzer Qube. 
-Prosjektet gikk ut på å styre vinkelen til Quben ved å bruke en terminal og/eller en GUI. I tillegg til dette skulle vi lage en PID-kontroller som skulle regulere og gi ut et hastighets-pådrag. I tillegg til den fysiske Qube-roboten skulle vi også lage en simulator av roboten, som skulle ha en visualisering i RViz. For å gjennomføre dette måtte vi totalt ha fire (fem) pakker med forskjellige funksjoner og systemer som sammarbeidet med hverandre. Pakkene vi ende opp med er Qube_description, Qube_driver, Qube_bringup, Qube_controller og Pid_controller_msgs. Qube_driver pakken lagde vi ikke selv. Denne pakken var laget på forhånd og alt som trengtes for denne pakken var å laste den ned.
+Prosjektet gikk ut på å styre vinkelen til Quben ved å bruke en terminal og/eller en GUI. I tillegg til dette skulle vi lage en PID-kontroller som skulle regulere og gi ut et hastighets-pådrag. I tillegg til den fysiske Qube-roboten skulle vi også lage en simulator av roboten, som skulle ha en visualisering i RViz. For å gjennomføre dette måtte vi totalt ha fire (fem) pakker med forskjellige funksjoner og systemer som sammarbeidet med hverandre. Pakkene vi ende opp med er Qube_description, Qube_driver, Qube_bringup, Qube_controller og Pid_controller_msgs. Qube_driver pakken var laget på forhånd og alt som trengtes for denne pakken var å laste den ned og å ha ROS2 Control installert for at pakken skulle fungere.
 
 # Qube_description:
 Denne pakken inneholder 2 URDF-filer, som har hver sin funksjon. De to URDF-filene er: 
