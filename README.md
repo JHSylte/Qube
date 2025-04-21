@@ -2,7 +2,7 @@
 -----
 # Innledning (om prosjektet):
 I emnet Mekatronikk og robotikk har vi (Jon Håvard Sylte og Trym Vannebo) nylig gjennomført et mini prosjekt der vi skulle ved hjelp av ROS2 styre en Quanzer Qube. 
-Prosjektet gikk ut på å styre vinkelen til Quben ved å bruke en terminal og/eller en GUI. I tillegg til dette skulle vi lage en PID-kontroller som skulle regulere og gi ut et hastighets-pådrag. I tillegg til den fysiske Qube-roboten skulle vi også lage en simulator av roboten, som skulle ha en visualisering i RViz. For å gjennomføre dette måtte vi totalt ha fire pakker med forskjellige funksjoner og systemer som sammarbeidet med hverandre. Pakkene vi ende opp med er Qube_description, Qube_driver, Qube_bringup og Qube_controller.
+Prosjektet gikk ut på å styre vinkelen til Quben ved å bruke en terminal og/eller en GUI. I tillegg til dette skulle vi lage en PID-kontroller som skulle regulere og gi ut et hastighets-pådrag. I tillegg til den fysiske Qube-roboten skulle vi også lage en simulator av roboten, som skulle ha en visualisering i RViz. For å gjennomføre dette måtte vi totalt ha fire (fem) pakker med forskjellige funksjoner og systemer som sammarbeidet med hverandre. Pakkene vi ende opp med er Qube_description, Qube_driver, Qube_bringup, Qube_controller og Pid_controller_msgs. Qube_driver pakken lagde vi ikke selv. Denne pakken var laget på forhånd og alt som trengtes for denne pakken var å laste den ned.
 
 # Qube_description:
 Denne pakken inneholder 2 URDF-filer, som har hver sin funksjon. De to URDF-filene er: 
@@ -53,8 +53,9 @@ I tillegg til de to URDF-filene, så inneholder denne pakken også en launch-fil
 
         view_qube.launch.py
 
-# Qube_driver:
-kommunikasjonsgrensesnittet med den fysiske Quben...
+# Pid_controller_msgs
+Er denne pakken ferdig? Og er det den som setter setreference?
+
 # Qube_bringup:
 Denne pakken inneholder en launch- og en konfigurasjon-fil som fletter sammen Qube-systemet. Konfigurasjonsfilen er en URDF-fil som heter controlled_qube.urdf.xacro og den er relativt lik scene-filen fra qube_description pakken, bortsett fra at konfigurasjonsfilen inneholder mer en det scene-filen gjør. I tillegg til innholdet til scene-filen, så inkluderer konfigurasjonsfilen også qube_driver.ros2_control.xacro filen, som (skriv mer her når kode er lastet opp). 
 I tillegg til dette så inneholder konfigurasjonsfilen tre macro argumenter: baud_rate, device og simulation. 
@@ -64,4 +65,4 @@ Disse argumentene er det som blir brukt for å bestemme om vi skal simulere elle
 Som sagt, så hadde vi også en launch-fil for denne pakken. Denne lauch-filen ble brukt til å starte opp qube_driver.launch.py fra qube_driver-pakken, rviz og robot state controller. Dette gjør at alle de essensielle delene av det samlede programmet starter opp med kun en kommando, som gjør at det ferdige programmet blir lettere å bruke.
 
 # Qube_controller:
-PID-kontroller som regulerer roboten/Quben...
+Denne pakken inneholder PID-kontrolleren for å regulere Quben. (Hva skal vi skrive her?, Kommer ikke på hva vi kan skrive om denne pakken) 
