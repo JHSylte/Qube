@@ -11,9 +11,39 @@ Denne pakken inneholder 2 URDF-filer, som har hver sin funksjon. De to URDF-file
     qube.urdf.xacro
 -Macro-filen
 
-Macro-filen (qube.macro.xacro) inneholder beskrivelsen av quben. I denne filen blir en digital versjon av quben laget, ved å først bygge de ulike delene til roboten, før de derreter blir satt sammen med ulike joints. Et eksempel på dette kan bli sett i kode utklippet under, der vi først beskriver den røde roterende disken til kuben og den hvite viseren som skal indikere vinklen til quben, etterfulgt av hvordan disse to skal sitte sammen med en joint.
+Macro-filen (qube.macro.xacro) inneholder beskrivelsen av quben. I denne filen blir en digital versjon av quben laget, ved å først bygge de ulike delene til roboten, før de derreter blir satt sammen med ulike joints. Et eksempel på dette kan bli sett i kode utklippet under, der vi først beskriver den røde roterende disken (Rotor link) til kuben og den hvite viseren (Angle link) som skal indikere vinklen til quben, etterfulgt av hvordan disse to skal sitte sammen med en joint.
 
-        Legg inn kode her
+        <!-- Rotor link -->
+        <link name="${prefix}rotor_link">
+            <visual>
+                <geometry>
+                    <cylinder radius="${cylinder_radius}" length="${cylinder_height}"/>
+                </geometry>
+                <material name="red">
+                    <color rgba="1 0 0 1"/>
+                </material>
+            </visual>
+        </link>
+        
+        <!-- Angle link -->
+        <link name="${prefix}angle_link">
+            <visual>
+                <geometry>
+                    <box size="${angle_box_size}"/>
+                </geometry>
+                <material name="white">
+                    <color rgba="1 1 1 1"/>
+                </material>
+            </visual>
+        </link>
+
+        <joint name="${prefix}motor_joint" type="revolute">
+            <parent link="${prefix}stator_link"/>
+            <child link="${prefix}rotor_link"/>
+            <origin xyz="0 0 ${box_size/2}" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit effort="1.0" lower="-3.14" upper="3.14" velocity="1.0"/>
+        </joint>
 
 -Scene-filen
 
