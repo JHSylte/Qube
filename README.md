@@ -15,28 +15,27 @@ Macro-filen inneholder beskrivelsen av quben. I denne filen blir en digital vers
 
 -Scene-filen (qube.urdf.xacro)
 
-Scene-filen fungerer som en scene for roboten, ved å lage en link mellom quben vi beskrev i macro-filen og en scene. Scenen i denne filen er en veldig simpel scene der quben står i origo. Ved å sette opp pakken på denne måten, så har vi separert funksjonene til de to filene, der den ene filen beskriver quben, mens den andre legger den inn i en scene, slik at beskrivelsen kan bli visualisert. Ved å sette det opp på denne måten så blir også filen der vi beskriver quben gjenbrukbar, slik at den kan bli brukt videre i andre URDF-filer.
+Scene-filen fungerer som en scene for roboten, ved å lage en link mellom quben vi beskrev i macro-filen og en scene. Scenen i denne filen er en veldig simpel scene der quben står i origo. Ved å sette opp pakken på denne måten, så får man separert funksjonene til de to filene, der den ene filen beskriver quben, mens den andre legger den inn i en scene, noe som gjør at beskrivelsen kan bli visualisert. Ved å sette det opp på denne måten så blir også filen med beskrivelsen av quben gjenbrukbar, slik at den kan bli brukt videre i andre URDF-filer.
 
 -Launch-fil
 
-I tillegg til de to URDF-filene, så inneholder denne pakken også en launch-fil. Denne launch-filen blir brukt senere i qube_bringup pakken, der den blir brukt til å starte opp macro- og scene-filen slik at vi får en digital versjon av quben når vi starter opp hovedprogrammet. Lanch filen for macro- og scene-filen er:
+I tillegg til de to URDF-filene, så inneholder denne pakken også en launch-fil. Denne launch-filen blir brukt senere i qube_bringup pakken, der den blir brukt til å starte opp macro- og scene-filen slik at man får en digital versjon av quben når man starter opp hovedprogrammet. Lanch filen for macro- og scene-filen er:
 
     view_qube.launch.py
 
 # Qube_Driver:
-Denne pakken har vi ikke laget selv. Som en del av dette prosjektet, så var denne pakken allerede laget og det vi trenge å gjøre med den var kun å laste den ned fra: https://github.com/adamleon/qube_driver
-Videre for at denne pakken skulle fungere så måtte vi ha ROS2 Control installert, som kan bli gjort ved å skrive inn denne koden i en terminal:
+Denne pakken har vi ikke laget selv. Som en del av dette prosjektet, så var denne pakken allerede laget og det enste som måtte gjøres var å laste den ned fra: https://github.com/adamleon/qube_driver
+Videre for at denne pakken skulle fungere så må ROS2 Control installert være installert, som kan bli gjort ved å skrive inn denne koden i en terminal:
     
     sudo apt install -y ros-jazzy-ros2-control ros-jazzy-ros2-controllers
 
 
 # Qube_bringup:
-Denne pakken inneholder en launch- og en konfigurasjon-fil som fletter sammen Qube-systemet. Konfigurasjonsfilen er en URDF-fil som heter controlled_qube.urdf.xacro og den er relativt lik scene-filen fra qube_description pakken, bortsett fra at konfigurasjonsfilen inneholder mer en det scene-filen gjør. I tillegg til innholdet til scene-filen, så inkluderer konfigurasjonsfilen også qube_driver.ros2_control.xacro filen, som (skriv mer her når kode er lastet opp). 
-I tillegg til dette så inneholder konfigurasjonsfilen tre macro argumenter: baud_rate, device og simulation. 
+Denne pakken inneholder en launch- og en konfigurasjon-fil som fletter sammen Qube-systemet. Konfigurasjonsfilen er en URDF-fil som heter controlled_qube.urdf.xacro og den er relativt lik scene-filen fra qube_description pakken, bortsett fra at konfigurasjonsfilen inneholder mer en det scene-filen gjør. I tillegg til innholdet til scene-filen, så inkluderer konfigurasjonsfilen også qube_driver.ros2_control.xacro filen som setter opp ROS 2 kontrollgrensesnittet. Videre så inneholder konfigurasjonsfilen tre macro argumenter: baud_rate, device og simulation. 
 
-Disse argumentene er det som blir brukt for å bestemme om vi skal simulere eller koble til den fysiske quben, samt hvordan dette skal gjøres. Simulation argumentet er det som bestemmer om vi skal simulere quben digitalt ved å sette argumentet til "True" eller om programmet skal koble seg til den fyske kuben ved å sette simulation til "False". Device argumentet er det som bestemmer hvilen USB-port som programmet skal bruke for å styre quben. Baud_rate er argumentet som bestemmer hvor ofte/fort programmet skal sende signaler til quben. Standaren for baud_rate argumentet som ble brukt i dette prosjketet var 115200.
+Disse argumentene er det som blir brukt for å bestemme om man skal simulere eller koble til den fysiske quben, samt hvordan dette skal gjøres. Simulation argumentet er det som bestemmer om man skal simulere quben digitalt ved å sette argumentet til "True" eller om programmet skal koble seg til den fyske kuben ved å sette simulation til "False". Device argumentet er det som bestemmer hvilen USB-port som programmet skal bruke for å styre quben. Baud_rate er argumentet som bestemmer hvor ofte/fort programmet skal sende signaler til quben. Standaren for baud_rate argumentet som ble brukt i dette prosjketet var 115200.
 
-Som sagt, så hadde vi også en launch-fil for denne pakken. Denne lauch-filen ble brukt til å starte opp qube_driver.launch.py fra qube_driver-pakken, rviz og robot state controller. Dette gjør at alle de essensielle delene av det samlede programmet starter opp med kun en kommando, som gjør at det ferdige programmet blir lettere å bruke. I oppstartskommandoen kan man og sette om du skal kjøre launchen i simulator eller med den faktiske quben.
+Som sagt, så er det også en launch-fil for denne pakken. Denne lauch-filen blir brukt til å starte opp qube_driver.launch.py fra qube_driver-pakken, rviz og robot state controller. Dette gjør at alle de essensielle delene av det samlede programmet starter opp med kun en kommando, som gjør at det ferdige programmet blir lettere å bruke.
 
 # Qube_controller:
 Denne pakken implementerer en PID-kontroller for å styre Quben ved hjelp av ROS2. Målet er å justere robotens bevegelse slik at den holder en ønsket posisjon (referanse). En viktig funksjon i pakken er muligheten til å justere PID-parametrene (P, I, D) samt referanseverdien i sanntid. Dette gjøres ved hjelp av ROS2-parametere. Parametrene kan settes via ros2 param set-kommandoen eller programmatisk, og de endringene du gjør vil påvirke PID-kontrollerens respons umiddelbart. Dette gir brukeren fleksibilitet til å justere kontrollsystemet etter behov, for eksempel for å håndtere forskjellige typer dynamikk i roboten eller for å finjustere ytelsen.
