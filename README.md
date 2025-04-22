@@ -10,7 +10,6 @@ Denne pakken inneholder 2 URDF-filer, som har hver sin funksjon. De to URDF-file
     qube.macro.xacro
     qube.urdf.xacro
 -Macro-filen
-
 Macro-filen (qube.macro.xacro) inneholder beskrivelsen av quben. I denne filen blir en digital versjon av quben laget, ved å først bygge de ulike delene til roboten, før de derreter blir satt sammen med ulike joints. Et eksempel på dette kan bli sett i kode utklippet under, der vi først beskriver den røde roterende disken (Rotor link) til kuben og den hvite viseren (Angle link) som skal indikere vinklen til quben, etterfulgt av hvordan disse to skal sitte sammen med en joint.
 
         <!-- Rotor link -->
@@ -59,25 +58,33 @@ Videre for at denne pakken skulle fungere så måtte vi ha ROS2 Control installe
     
     sudo apt install -y ros-jazzy-ros2-control ros-jazzy-ros2-controllers
 
-Skal vi skrive noe mer her?
 
 # Qube_bringup:
 Denne pakken inneholder en launch- og en konfigurasjon-fil som fletter sammen Qube-systemet. Konfigurasjonsfilen er en URDF-fil som heter controlled_qube.urdf.xacro og den er relativt lik scene-filen fra qube_description pakken, bortsett fra at konfigurasjonsfilen inneholder mer en det scene-filen gjør. I tillegg til innholdet til scene-filen, så inkluderer konfigurasjonsfilen også qube_driver.ros2_control.xacro filen, som (skriv mer her når kode er lastet opp). 
 I tillegg til dette så inneholder konfigurasjonsfilen tre macro argumenter: baud_rate, device og simulation. 
 
-Disse argumentene er det som blir brukt for å bestemme om vi skal simulere eller koble til den fysiske quben, samt hvordan dette skal gjøres. Simulation argumentet er det som bestemmer om vi skal simulere quben digitalt ved å sette argumentet til "True" eller om programmet skal koble seg til den fyske kuben ved å sette simulation til "False". Device argumentet er det som bestemmer hvilen USB-port som programmet skal bruke for å styre quben. Baud_rate er argumentet som bestemmer hvor ofte/fort (er dette riktig?) programmet skal sende signaler til quben. Standaren for baud_rate argumentet som ble brukt i dette prosjketet var 115200.
+Disse argumentene er det som blir brukt for å bestemme om vi skal simulere eller koble til den fysiske quben, samt hvordan dette skal gjøres. Simulation argumentet er det som bestemmer om vi skal simulere quben digitalt ved å sette argumentet til "True" eller om programmet skal koble seg til den fyske kuben ved å sette simulation til "False". Device argumentet er det som bestemmer hvilen USB-port som programmet skal bruke for å styre quben. Baud_rate er argumentet som bestemmer hvor ofte/fort programmet skal sende signaler til quben. Standaren for baud_rate argumentet som ble brukt i dette prosjketet var 115200.
 
 Som sagt, så hadde vi også en launch-fil for denne pakken. Denne lauch-filen ble brukt til å starte opp qube_driver.launch.py fra qube_driver-pakken, rviz og robot state controller. Dette gjør at alle de essensielle delene av det samlede programmet starter opp med kun en kommando, som gjør at det ferdige programmet blir lettere å bruke. I oppstartskommandoen kan man og sette om du skal kjøre launchen i simulator eller med den faktiske quben.
 
 # Qube_controller:
-Denne pakken inneholder PID-kontrolleren for å regulere Quben. (Hva skal vi skrive her?, Kommer ikke på hva vi kan skrive om denne pakken) 
+Denne pakken inneholder PID-kontrolleren for å regulere Quben. 
+Denne pakken er bygget slik at parameterne til PID-regulatoren og refereancevinkelen kan endres ved å skrive ulike kommandoer i en terminal. 
 
 # Bruk av programmet
 Nå som vi har gått gjennom hva de ulike pakkene i programmet gjør, så kan vi gå inn på hvordan man kan bruke det ferdige programmet der alle pakkene er blitt satt sammen. Ved måten vi satte opp pakkene på så er det mulig å starte opp alle nodene og delene av programmet med kun en kommando i terminalen (etter at pakken er bygget). 
     
-    ros2 launch qube_bringup bringup.launch.py use_sim:=true
+    ros2 launch qube_bringup bringup.launch.py use_sim:=true baudrate:=115200 device:=/dev/ttyACM0
+Ved å skrive denne kommandoen i en terminal, så vil som sagt alle de ulike nodene/delene av programmet starte opp. Denne kommandoen er delt inn i ulike deler, der en del er selve kommandoen for å starte opp nodene:
 
-Mer forklaring om hva de ulike delene av kode start linjen
+    ros2 launch qube_bringup bringup.launch.py 
+Og de andre delene er argumenter for å bestemme simulation, baud_rate og device:
+
+    use_sim:=true
+    baudrate:=115200
+    device:=/dev/ttyACM0
+   
+For å bestemme PID og Setpoint så må åpne en annen terminal der man kan skrive inn disse komandoene, der X er en integer:
 
     ros2 param set /qube_controller p X
     ros2 param set /qube_controller i X
