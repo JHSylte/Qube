@@ -68,8 +68,7 @@ Disse argumentene er det som blir brukt for å bestemme om vi skal simulere elle
 Som sagt, så hadde vi også en launch-fil for denne pakken. Denne lauch-filen ble brukt til å starte opp qube_driver.launch.py fra qube_driver-pakken, rviz og robot state controller. Dette gjør at alle de essensielle delene av det samlede programmet starter opp med kun en kommando, som gjør at det ferdige programmet blir lettere å bruke. I oppstartskommandoen kan man og sette om du skal kjøre launchen i simulator eller med den faktiske quben.
 
 # Qube_controller:
-Denne pakken inneholder PID-kontrolleren for å regulere Quben. 
-Denne pakken er bygget slik at parameterne til PID-regulatoren og refereancevinkelen kan endres ved å skrive ulike kommandoer i en terminal. 
+Denne pakken implementerer en PID-kontroller for å styre Quben ved hjelp av ROS2. Målet er å justere robotens bevegelse slik at den holder en ønsket posisjon (referanse). En av viktig funksjon er muligheten til å justere PID-parametrene (P, I, D) samt referanseverdien i sanntid. Dette gjøres ved hjelp av ROS2-parametere. Parametrene kan settes via ros2 param set-kommandoen eller programmatisk, og de endringer du gjør vil påvirke PID-kontrollerens respons umiddelbart. Dette gir brukeren fleksibilitet til å justere kontrollsystemet etter behov, for eksempel for å håndtere forskjellige typer dynamikk i roboten eller for å finjustere ytelsen.
 
 # Bruk av programmet
 Nå som vi har gått gjennom hva de ulike pakkene i programmet gjør, så kan vi gå inn på hvordan man kan bruke det ferdige programmet der alle pakkene er blitt satt sammen. Ved måten vi satte opp pakkene på så er det mulig å starte opp alle nodene og delene av programmet med kun en kommando i terminalen (etter at pakken er bygget). 
