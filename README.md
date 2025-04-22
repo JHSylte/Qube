@@ -17,6 +17,8 @@ Macro-filen (qube.macro.xacro) inneholder beskrivelsen av quben. I denne filen b
 
 Scene-filen (qube.urdf.xacro) fungerer som en scene for roboten, ved å lage en link mellom quben vi beskrev i macro-filen og en scene. Scenen i denne filen er en veldig simpel scene der quben står i origo. Ved å sette opp pakken på denne måten, så har vi separert funksjonene til de to filene, der den ene filen beskriver quben, mens den andre legger den inn i en scene, slik at beskrivelsen kan bli visualisert. Ved å sette det opp på denne måten så blir også filen der vi beskriver quben gjenbrukbar, slik at den kan bli brukt videre i andre URDF-filer.
 
+-launch-fil
+
 I tillegg til de to URDF-filene, så inneholder denne pakken også en launch-fil. Denne launch-filen blir brukt senere i qube_bringup pakken, der den blir brukt til å starte opp macro- og scene-filen slik at vi får en digital versjon av quben når vi starter opp hovedprogrammet. Lanch filen for macro- og scene-filen er:
 
     view_qube.launch.py
