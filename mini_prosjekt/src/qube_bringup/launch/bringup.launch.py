@@ -16,7 +16,7 @@ def generate_launch_description():
         urdf_file
     ])
 
-    # Launch Qube-driver
+    # Include Qube-driver launch file
     qube_driver_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             PathJoinSubstitution([
@@ -25,7 +25,11 @@ def generate_launch_description():
                 'qube_driver.launch.py'
             ])
         ),
-        launch_arguments={'use_sim': LaunchConfiguration('use_sim')}.items()
+        launch_arguments={
+            'use_sim': LaunchConfiguration('use_sim'),
+            'baudrate': LaunchConfiguration('baudrate'),
+            'device': LaunchConfiguration('device')
+        }.items()
     )
 
     # Robot State Publisher
@@ -36,19 +40,22 @@ def generate_launch_description():
         parameters=[{
             'robot_description': Command([
                 'xacro ', urdf_path,
-                ' simulation:=', LaunchConfiguration('use_sim')
+                ' simulation:=', LaunchConfiguration('use_sim'),
+                ' baud_rate:=', LaunchConfiguration('baudrate'),
+                ' device:=', LaunchConfiguration('device')
             ]),
             'use_sim_time': LaunchConfiguration('use_sim')
         }]
     )
 
+    # Controller node
     qube_controller = Node(
         package='qube_controller',
         executable='qube_controller',
         name='qube_controller',
     )
 
-    # RViz
+    # RViz node
     rviz_config_path = PathJoinSubstitution([
         FindPackageShare(package_name),
         'rviz',
@@ -67,6 +74,16 @@ def generate_launch_description():
             'use_sim',
             default_value='true',
             description='Whether to run in simulation mode or not'
+        ),
+        DeclareLaunchArgument(
+            'baudrate',
+            default_value='115200',
+            description='Baudrate for serial communication'
+        ),
+        DeclareLaunchArgument(
+            'device',
+            default_value='/dev/ttyACM0',
+            description='Device path for serial communication'
         ),
         qube_driver_launch,
         robot_state_publisher,
