@@ -1,3 +1,10 @@
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch_ros.actions import Node
+from launch.substitutions import Command, LaunchConfiguration, PathJoinSubstitution
+from launch_ros.substitutions import FindPackageShare
+
 def generate_launch_description():
     # Definerer navnene på pakkene som brukes i oppsettet, samt URDF-filens navn.
     package_name = 'qube_bringup'
